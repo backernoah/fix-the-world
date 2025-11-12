@@ -806,6 +806,31 @@ body {
   font-size: 1.2rem;
 }
 
+/* Ad containers */
+.ad-container {
+  margin: 30px auto;
+  max-width: 728px;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-placeholder {
+  background: var(--bg-tertiary);
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  width: 100%;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .title {
@@ -941,6 +966,17 @@ body {
 
   .container {
     padding: 0 15px;
+  }
+
+  .ad-container {
+    margin: 20px auto;
+    max-width: 100%;
+  }
+
+  .ad-placeholder {
+    padding: 20px;
+    font-size: 0.85rem;
+    min-height: 60px;
   }
 }
 
