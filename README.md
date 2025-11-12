@@ -160,6 +160,37 @@ Upload all files to any static hosting service:
 - **LocalStorage**: Persistent state
 - **Google Fonts**: Inter font family
 
+## 🚀 Deployment
+
+### Quick Deploy to Netlify
+
+1. **Push to GitHub**:
+   ```bash
+   git add .
+   git commit -m "Your changes"
+   git push
+   ```
+
+2. **Connect to Netlify**:
+   - Sign up at [netlify.com](https://netlify.com) with GitHub
+   - Click "Import from Git"
+   - Select your repository
+   - Click "Deploy" (no build commands needed!)
+
+3. **Your site is live!** at `yoursite.netlify.app`
+
+### Update Your Site (3 commands)
+```bash
+git add .                          # Stage changes
+git commit -m "Update message"     # Commit
+git push                           # Auto-deploys to Netlify!
+```
+
+### Custom Domain (Optional)
+- Buy domain from Namecheap (~$10/year)
+- Add in Netlify: Site settings → Domain management
+- Free HTTPS included automatically
+
 ## 📈 SEO Optimization
 
 Key pages to add:
