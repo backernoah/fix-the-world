@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix the World with $1 Trillion 🌍</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Sticky Mini Header -->
+  <div class="mini-header" id="miniHeader">
+    <div class="mini-header-content">
+      <div class="mini-header-title">🌍 Fix the World</div>
+      <div class="mini-header-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-label">Budget</div>
+          <div class="mini-stat-value" id="miniBudget">$1,000,000,000,000</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-label">Purchased</div>
+          <div class="mini-stat-value accent" id="miniPurchased">0</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-label">Lives Impacted</div>
+          <div class="mini-stat-value accent" id="miniLives">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header with budget -->
+  <header class="header" id="mainHeader">
+    <div class="container">
+      <h1 class="title">🌍 Fix the World</h1>
+      <p class="subtitle">You have $1 trillion. Can you actually fix the world?</p>
+
+      <div class="budget-display">
+        <div class="budget-label">Remaining Budget</div>
+        <div class="budget-amount" id="budgetAmount">$1,000,000,000,000</div>
+        <div class="budget-bar">
+          <div class="budget-bar-fill" id="budgetBarFill"></div>
+        </div>
+        <div class="budget-spent">
+          Spent: <span id="spentAmount">$0</span>
+        </div>
+      </div>
+
+      <div class="quick-stats">
+        <div class="stat">
+          <div class="stat-value" id="itemsPurchased">0</div>
+          <div class="stat-label">Items Purchased</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="livesSaved">0</div>
+          <div class="stat-label">Lives Impacted</div>
+        </div>
+      </div>
+
+      <button class="btn-reset-main" id="resetBtnMain">🔄 Reset Budget</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="container">
+      <!-- Filter buttons -->
+      <div class="filters">
+        <button class="filter-btn active" data-category="all">All Items</button>
+        <button class="filter-btn" data-category="micro">🌱 Micro</button>
+        <button class="filter-btn" data-category="community">💧 Community</button>
+        <button class="filter-btn" data-category="regional">🌾 Regional</button>
+        <button class="filter-btn" data-category="national">🏙️ National</button>
+        <button class="filter-btn" data-category="global_health">🧬 Health</button>
+        <button class="filter-btn" data-category="mega">🌎 Mega</button>
+        <button class="filter-btn" data-category="space">🛰️ Space</button>
+        <button class="filter-btn" data-category="society">💵 Society</button>
+        <button class="filter-btn" data-category="absurd">🧠 Absurd</button>
+      </div>
+
+      <!-- Items grid -->
+      <div class="items-grid" id="itemsGrid">
+        <!-- Items will be dynamically inserted here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Impact Summary Modal -->
+  <div class="modal" id="impactModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h2 class="modal-title">Your Impact Summary</h2>
+      <div class="modal-body" id="modalBody">
+        <!-- Impact summary will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="shareBtn">Share Results</button>
+        <button class="btn-secondary" id="resetBtn">Start Over</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item Detail Modal -->
+  <div class="modal" id="itemModal">
+    <div class="modal-content">
+      <button class="modal-close" id="itemModalClose">&times;</button>
+      <div class="item-detail" id="itemDetail">
+        <!-- Item details will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating action button for impact summary -->
+  <button class="fab" id="showImpactBtn" title="View Impact Summary">
+    <span class="fab-icon">📊</span>
+    <span class="fab-badge" id="fabBadge">0</span>
+  </button>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
