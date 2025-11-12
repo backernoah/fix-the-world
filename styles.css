@@ -655,6 +655,11 @@ body {
   z-index: 999;
 }
 
+.fab i {
+  background: transparent;
+  color: white;
+}
+
 .fab:hover {
   transform: scale(1.1) rotate(5deg);
   box-shadow: 0 8px 35px rgba(59, 130, 246, 0.7);
