@@ -48,16 +48,7 @@ body {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0%, 100% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(30deg); }
+  color: var(--text-primary);
 }
 
 .subtitle {
@@ -826,7 +817,7 @@ body {
   font-size: 0.9rem;
   width: 100%;
   min-height: 90px;
-  display: flex;
+  display: none; /* Hidden by default - show only in dev */
   align-items: center;
   justify-content: center;
 }
