@@ -121,7 +121,7 @@ function renderItems() {
 
         <div class="item-header">
           <div class="item-emoji">${item.emoji}</div>
-          <div class="item-cost">${formatCurrency(item.cost)}</div>
+          <div class="item-cost">${formatFullCurrency(item.cost)}</div>
         </div>
 
         <h3 class="item-name">${item.name}</h3>
@@ -135,9 +135,9 @@ function renderItems() {
           <button class="btn btn-buy"
                   data-id="${item.id}"
                   ${!canAfford ? 'disabled' : ''}>
-            ${canAfford ? '💰 Buy' : '❌ Too Expensive'}
+            ${canAfford ? '<i class="fas fa-shopping-cart"></i> Buy' : '<i class="fas fa-times"></i> Too Expensive'}
           </button>
-          <button class="btn btn-info" data-id="${item.id}">ℹ️</button>
+          <button class="btn btn-info" data-id="${item.id}"><i class="fas fa-info-circle"></i></button>
         </div>
       </div>
     `;
@@ -199,7 +199,7 @@ function purchaseItem(itemId) {
   renderItems();
 
   // Show toast
-  showToast(`Purchased: ${item.emoji} ${item.name}! 🎉`, 'success');
+  showToast(`Purchased: ${item.emoji} ${item.name}!`, 'success');
 
   // Animate
   bounceElement(document.querySelector('.budget-amount'));
@@ -332,38 +332,38 @@ function showItemDetail(itemId) {
     </div>
 
     <div class="item-detail-section">
-      <h3>📝 Description</h3>
+      <h3><i class="fas fa-file-alt"></i> Description</h3>
       <p>${item.description}</p>
     </div>
 
     <div class="item-detail-section">
-      <h3>🌍 Global Context</h3>
+      <h3><i class="fas fa-globe"></i> Global Context</h3>
       <p>${item.totalNeed}</p>
     </div>
 
     <div class="item-detail-section">
-      <h3>✨ Impact Per Purchase</h3>
+      <h3><i class="fas fa-chart-line"></i> Impact Per Purchase</h3>
       <p>${item.impactPerPurchase}</p>
     </div>
 
     <div class="item-detail-section">
-      <h3>💡 Fun Fact</h3>
+      <h3><i class="fas fa-lightbulb"></i> Fun Fact</h3>
       <p>${item.funFact}</p>
     </div>
 
     <div class="item-detail-section">
-      <h3>🏷️ Category</h3>
+      <h3><i class="fas fa-tag"></i> Category</h3>
       <p>${category.emoji} ${category.name}</p>
     </div>
 
     ${item.organizations && item.organizations.length > 0 ? `
       <div class="item-detail-section">
-        <h3>🤝 Organizations Working on This</h3>
+        <h3><i class="fas fa-handshake"></i> Organizations Working on This</h3>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
           ${item.organizations.map(org => `
             <a href="${org.url}" target="_blank" rel="noopener noreferrer"
                style="color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 5px;">
-              🔗 ${org.name}
+              <i class="fas fa-external-link-alt"></i> ${org.name}
               <span style="font-size: 0.8rem; opacity: 0.7;">↗</span>
             </a>
           `).join('')}
@@ -371,14 +371,14 @@ function showItemDetail(itemId) {
       </div>
     ` : item.category === 'absurd' ? `
       <div class="item-detail-section">
-        <h3>🤝 Organizations</h3>
-        <p style="font-style: italic; opacity: 0.8;">😄 This is just for fun! No real organization is working on building a Death Star... that we know of.</p>
+        <h3><i class="fas fa-handshake"></i> Organizations</h3>
+        <p style="font-style: italic; opacity: 0.8;"><i class="fas fa-smile"></i> This is just for fun! No real organization is working on building a Death Star... that we know of.</p>
       </div>
     ` : ''}
 
     ${purchaseCount > 0 ? `
       <div class="item-detail-section">
-        <h3>✅ You've purchased this</h3>
+        <h3><i class="fas fa-check-circle"></i> You've purchased this</h3>
         <p>Times purchased: <strong>${purchaseCount}</strong></p>
         <p>Total spent: <strong>${formatCurrency(item.cost * purchaseCount)}</strong></p>
       </div>
@@ -386,7 +386,7 @@ function showItemDetail(itemId) {
 
     <div class="item-detail-actions">
       <button class="btn-primary" onclick="purchaseItem(${item.id}); document.getElementById('itemModal').classList.remove('active');" ${!canAfford ? 'disabled' : ''}>
-        ${canAfford ? '💰 Purchase Now' : '❌ Not Enough Budget'}
+        ${canAfford ? '<i class="fas fa-shopping-cart"></i> Purchase Now' : '<i class="fas fa-times"></i> Not Enough Budget'}
       </button>
     </div>
   `;
@@ -429,6 +429,12 @@ function showImpactModal() {
     const category = CATEGORIES[categoryKey];
     const categoryTotal = purchases.reduce((sum, p) => sum + p.totalCost, 0);
 
+    // Calculate lives impacted for this category
+    const categoryLivesImpacted = purchases.reduce((sum, p) => {
+      const livesPerItem = estimateLivesImpacted(p.item);
+      return sum + (livesPerItem * p.count);
+    }, 0);
+
     summaryHtml += `
       <div class="impact-category">
         <h3>${category.emoji} ${category.name}</h3>
@@ -438,23 +444,72 @@ function showImpactModal() {
             <span class="impact-item-count">×${p.count} (${formatCurrency(p.totalCost)})</span>
           </div>
         `).join('')}
-        <div class="impact-item" style="border-top: 2px solid var(--border); margin-top: 10px; padding-top: 10px;">
-          <span class="impact-item-name"><strong>Category Total</strong></span>
-          <span class="impact-item-count"><strong>${formatCurrency(categoryTotal)}</strong></span>
+        <div class="category-total-section">
+          <div class="category-total-header">Category Total</div>
+          <div class="category-total-amount">${formatFullCurrency(categoryTotal)}</div>
+          <div class="category-total-lives"><i class="fas fa-users"></i> ${categoryLivesImpacted.toLocaleString()} lives impacted</div>
         </div>
       </div>
     `;
   });
 
+  // Generate personalized message based on spending
+  const categoriesInvested = Object.keys(purchasesByCategory);
+  const percentSpent = ((state.spent / TOTAL_BUDGET) * 100);
+
+  // Format category names nicely
+  const categoryNames = categoriesInvested.map(c => {
+    const name = CATEGORIES[c].name;
+    // Replace "Weird / Fun / Absurd" with something more natural
+    return name === "Weird / Fun / Absurd" ? "unconventional projects" : name;
+  });
+
+  // Format list with "and" before last item
+  const formatList = (items) => {
+    if (items.length === 0) return '';
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return `${items[0]} and ${items[1]}`;
+    return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+  };
+
+  const formattedCategories = formatList(categoryNames);
+
+  let personalMessage = '';
+
+  if (state.livesSaved > 1000000) {
+    personalMessage = `You've made a profound impact on over ${state.livesSaved.toLocaleString()} lives by investing in ${formattedCategories}. Your choices show a deep commitment to making the world better. `;
+  } else if (state.livesSaved > 100000) {
+    personalMessage = `Through your investments in ${formattedCategories}, you've positively impacted ${state.livesSaved.toLocaleString()} lives. That's a powerful legacy. `;
+  } else if (state.livesSaved > 10000) {
+    personalMessage = `Your focus on ${formattedCategories} has improved ${state.livesSaved.toLocaleString()} lives in meaningful ways. `;
+  } else {
+    personalMessage = `By investing in ${formattedCategories}, you've made a real difference for ${state.livesSaved.toLocaleString()} people. `;
+  }
+
+  if (percentSpent < 10) {
+    personalMessage += `You've barely scratched the surface with ${percentSpent.toFixed(1)}% of your budget spent—there's still ${formatCurrency(state.budget)} left to change even more lives.`;
+  } else if (percentSpent < 50) {
+    personalMessage += `You've used ${percentSpent.toFixed(1)}% of your budget thoughtfully, and still have ${formatCurrency(state.budget)} remaining to continue your mission.`;
+  } else if (percentSpent < 90) {
+    personalMessage += `With ${percentSpent.toFixed(1)}% of your budget deployed, you've committed seriously to making change, with ${formatCurrency(state.budget)} left for final priorities.`;
+  } else if (percentSpent < 100) {
+    personalMessage += `You've gone all in, spending ${percentSpent.toFixed(1)}% of your trillion! Only ${formatCurrency(state.budget)} remains—every dollar counts now.`;
+  } else {
+    personalMessage += `You've spent every last dollar of your trillion on making the world better. Nothing left for yourself, just pure impact.`;
+  }
+
   summaryHtml += `
     <div class="impact-total">
       <h3>Total Impact</h3>
       <div style="margin-bottom: 10px; font-size: 0.9rem; opacity: 0.9;">Total Spent</div>
-      <div class="impact-total-value">${formatCurrency(state.spent)}</div>
+      <div class="impact-total-value">${formatFullCurrency(state.spent)}</div>
       <div style="margin-top: 15px; font-size: 1.1rem;">
-        <div>💰 ${totalPurchases} purchases made</div>
-        <div>🌍 ${state.livesSaved.toLocaleString()} lives impacted</div>
-        <div>💵 ${formatCurrency(state.budget)} remaining</div>
+        <div><i class="fas fa-shopping-cart"></i> ${totalPurchases} purchases made</div>
+        <div><i class="fas fa-users"></i> ${state.livesSaved.toLocaleString()} lives impacted</div>
+        <div><i class="fas fa-wallet"></i> ${formatFullCurrency(state.budget)} remaining</div>
+      </div>
+      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.95rem; line-height: 1.6; opacity: 0.9;">
+        ${personalMessage}
       </div>
     </div>
   `;
@@ -512,7 +567,7 @@ function resetGame() {
   renderItems();
 
   document.getElementById('impactModal').classList.remove('active');
-  showToast('Game reset! Start fresh! 🔄', 'success');
+  showToast('<i class="fas fa-redo"></i> Game reset! Start fresh!', 'success');
 }
 
 // Show toast notification
@@ -526,7 +581,7 @@ function showToast(message, type = 'success') {
 
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.textContent = message;
+  toast.innerHTML = message;
 
   container.appendChild(toast);
 

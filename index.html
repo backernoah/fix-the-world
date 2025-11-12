@@ -8,12 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
   <!-- Sticky Mini Header -->
   <div class="mini-header" id="miniHeader">
     <div class="mini-header-content">
-      <div class="mini-header-title">🌍 Fix the World</div>
+      <div class="mini-header-title"><i class="fas fa-globe-americas"></i> Fix the World</div>
       <div class="mini-header-stats">
         <div class="mini-stat">
           <div class="mini-stat-label">Budget</div>
@@ -34,17 +35,22 @@
   <!-- Header with budget -->
   <header class="header" id="mainHeader">
     <div class="container">
-      <h1 class="title">🌍 Fix the World</h1>
+      <h1 class="title"><i class="fas fa-globe-americas"></i> Fix the World</h1>
       <p class="subtitle">You have $1 trillion. Can you actually fix the world?</p>
 
       <div class="budget-display">
-        <div class="budget-label">Remaining Budget</div>
-        <div class="budget-amount" id="budgetAmount">$1,000,000,000,000</div>
+        <div class="budget-row">
+          <div class="budget-item">
+            <div class="budget-label">Remaining Budget</div>
+            <div class="budget-amount" id="budgetAmount">$1,000,000,000,000</div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-label">Spent</div>
+            <div class="budget-amount spent-amount" id="spentAmount">$0</div>
+          </div>
+        </div>
         <div class="budget-bar">
           <div class="budget-bar-fill" id="budgetBarFill"></div>
-        </div>
-        <div class="budget-spent">
-          Spent: <span id="spentAmount">$0</span>
         </div>
       </div>
 
@@ -59,7 +65,7 @@
         </div>
       </div>
 
-      <button class="btn-reset-main" id="resetBtnMain">🔄 Reset Budget</button>
+      <button class="btn-reset-main" id="resetBtnMain"><i class="fas fa-redo"></i> Reset Budget</button>
     </div>
   </header>
 
@@ -69,15 +75,15 @@
       <!-- Filter buttons -->
       <div class="filters">
         <button class="filter-btn active" data-category="all">All Items</button>
-        <button class="filter-btn" data-category="micro">🌱 Micro</button>
-        <button class="filter-btn" data-category="community">💧 Community</button>
-        <button class="filter-btn" data-category="regional">🌾 Regional</button>
-        <button class="filter-btn" data-category="national">🏙️ National</button>
-        <button class="filter-btn" data-category="global_health">🧬 Health</button>
-        <button class="filter-btn" data-category="mega">🌎 Mega</button>
-        <button class="filter-btn" data-category="space">🛰️ Space</button>
-        <button class="filter-btn" data-category="society">💵 Society</button>
-        <button class="filter-btn" data-category="absurd">🧠 Absurd</button>
+        <button class="filter-btn" data-category="micro"><i class="fas fa-seedling"></i> Micro</button>
+        <button class="filter-btn" data-category="community"><i class="fas fa-tint"></i> Community</button>
+        <button class="filter-btn" data-category="regional"><i class="fas fa-wheat-awn"></i> Regional</button>
+        <button class="filter-btn" data-category="national"><i class="fas fa-city"></i> National</button>
+        <button class="filter-btn" data-category="global_health"><i class="fas fa-heartbeat"></i> Health</button>
+        <button class="filter-btn" data-category="mega"><i class="fas fa-globe"></i> Mega</button>
+        <button class="filter-btn" data-category="space"><i class="fas fa-satellite"></i> Space</button>
+        <button class="filter-btn" data-category="society"><i class="fas fa-hand-holding-usd"></i> Society</button>
+        <button class="filter-btn" data-category="absurd"><i class="fas fa-brain"></i> Absurd</button>
       </div>
 
       <!-- Ad Placement 1: Top banner (728x90 leaderboard or responsive) -->
@@ -89,6 +95,12 @@
       <!-- Items grid -->
       <div class="items-grid" id="itemsGrid">
         <!-- Items will be dynamically inserted here -->
+      </div>
+
+      <!-- Ad Placement 2: Bottom banner (728x90 leaderboard or responsive) -->
+      <div class="ad-container" id="ad-bottom">
+        <!-- Google AdSense code will go here -->
+        <div class="ad-placeholder">Ad Space (728x90 or Responsive)</div>
       </div>
     </div>
   </main>
@@ -120,7 +132,7 @@
 
   <!-- Floating action button for impact summary -->
   <button class="fab" id="showImpactBtn" title="View Impact Summary">
-    <span class="fab-icon">📊</span>
+    <span class="fab-icon"><i class="fas fa-chart-bar"></i></span>
     <span class="fab-badge" id="fabBadge">0</span>
   </button>
 
